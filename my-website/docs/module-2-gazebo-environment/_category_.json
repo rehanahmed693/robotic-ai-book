@@ -1,0 +1,9 @@
+{
+  "label": "Module 2: Gazebo Environment",
+  "collapsible": true,
+  "collapsed": false,
+  "link": {
+    "type": "doc",
+    "id": "module-2-gazebo-environment/intro"
+  }
+}

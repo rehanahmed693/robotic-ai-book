@@ -1,0 +1,343 @@
+# Nav2 Navigation Service API Contract
+
+## Overview
+This API contract defines the interface for interacting with the Navigation2 (Nav2) stack, including sending navigation goals, controlling the navigation system, and retrieving navigation status.
+
+## Base URL
+`http://localhost:5002/api/v1`
+
+## Authentication
+All endpoints require an API key in the `X-API-Key` header.
+
+## Endpoints
+
+### POST /navigation/goals
+Send a navigation goal to the robot.
+
+#### Request
+```json
+{
+  "goalId": "goal_12345",
+  "targetPose": {
+    "position": {
+      "x": 5.0,
+      "y": 3.0,
+      "z": 0.0
+    },
+    "orientation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    }
+  },
+  "frameId": "map",
+  "tolerance": 0.5,
+  "priority": 1
+}
+```
+
+#### Response - 201 Created
+```json
+{
+  "goalId": "goal_12345",
+  "status": "accepted",
+  "message": "Navigation goal accepted",
+  "estimatedArrival": "2023-10-05T17:30:00Z"
+}
+```
+
+### GET /navigation/status
+Get the current status of the navigation system.
+
+#### Response - 200 OK
+```json
+{
+  "navigationStatus": "active",
+  "currentGoalId": "goal_12345",
+  "currentPose": {
+    "position": {
+      "x": 2.1,
+      "y": 1.5,
+      "z": 0.0
+    },
+    "orientation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.1,
+      "w": 0.99
+    }
+  },
+  "remainingDistance": 3.2,
+  "pathProgress": 0.45,
+  "planners": {
+    "global": "navfn",
+    "local": "teb_local_planner"
+  },
+  "lastUpdate": "2023-10-05T17:15:00Z"
+}
+```
+
+### GET /navigation/goals/{goalId}
+Get details of a specific navigation goal.
+
+#### Response - 200 OK
+```json
+{
+  "goalId": "goal_12345",
+  "targetPose": {
+    "position": {
+      "x": 5.0,
+      "y": 3.0,
+      "z": 0.0
+    },
+    "orientation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    }
+  },
+  "frameId": "map",
+  "tolerance": 0.5,
+  "priority": 1,
+  "status": "executing",
+  "timestamp": "2023-10-05T17:00:00Z",
+  "plan": {
+    "planId": "plan_67890",
+    "waypoints": [
+      {
+        "position": {
+          "x": 2.5,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "orientation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.05,
+          "w": 0.99
+        }
+      },
+      {
+        "position": {
+          "x": 4.0,
+          "y": 2.0,
+          "z": 0.0
+        },
+        "orientation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.1,
+          "w": 0.99
+        }
+      }
+    ]
+  }
+}
+```
+
+### PUT /navigation/cancel
+Cancel the current navigation goal.
+
+#### Request
+```json
+{
+  "reason": "user_interrupted"
+}
+```
+
+#### Response - 200 OK
+```json
+{
+  "status": "cancelled",
+  "message": "Current navigation goal cancelled",
+  "currentGoalId": "goal_12345"
+}
+```
+
+### POST /navigation/path
+Get a path from the current position to a target without executing navigation.
+
+#### Request
+```json
+{
+  "targetPose": {
+    "position": {
+      "x": 5.0,
+      "y": 3.0,
+      "z": 0.0
+    },
+    "orientation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    }
+  },
+  "frameId": "map"
+}
+```
+
+#### Response - 200 OK
+```json
+{
+  "pathId": "path_11111",
+  "waypoints": [
+    {
+      "position": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orientation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 1.0
+      }
+    },
+    {
+      "position": {
+        "x": 2.5,
+        "y": 1.0,
+        "z": 0.0
+      },
+      "orientation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.05,
+        "w": 0.99
+      }
+    },
+    {
+      "position": {
+        "x": 4.0,
+        "y": 2.0,
+        "z": 0.0
+      },
+      "orientation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.1,
+        "w": 0.99
+      }
+    },
+    {
+      "position": {
+        "x": 5.0,
+        "y": 3.0,
+        "z": 0.0
+      },
+      "orientation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 1.0
+      }
+    }
+  ],
+  "distance": 6.4,
+  "estimatedTime": 120
+}
+```
+
+### PUT /navigation/pause
+Pause the current navigation.
+
+#### Response - 200 OK
+```json
+{
+  "status": "paused",
+  "message": "Navigation paused",
+  "currentGoalId": "goal_12345"
+}
+```
+
+### PUT /navigation/resume
+Resume the paused navigation.
+
+#### Response - 200 OK
+```json
+{
+  "status": "active",
+  "message": "Navigation resumed",
+  "currentGoalId": "goal_12345"
+}
+```
+
+## Error Responses
+
+### 400 Bad Request
+```json
+{
+  "error": "InvalidRequest",
+  "message": "Target pose is required",
+  "details": {
+    "field": "targetPose"
+  }
+}
+```
+
+### 404 Not Found
+```json
+{
+  "error": "GoalNotFound",
+  "message": "Navigation goal with ID 'goal_12345' does not exist"
+}
+```
+
+### 500 Internal Server Error
+```json
+{
+  "error": "InternalServerError",
+  "message": "An unexpected error occurred in navigation system"
+}
+```
+
+## Data Models
+
+### Navigation Goal
+- `goalId`: string (unique identifier)
+- `targetPose`: Pose object (target position and orientation)
+- `frameId`: string (coordinate frame)
+- `tolerance`: float (acceptable tolerance for reaching goal)
+- `priority`: integer (priority level)
+- `status`: enum (accepted, executing, succeeded, failed, cancelled)
+- `timestamp`: ISO 8601 timestamp
+- `plan`: Plan object (navigation plan if available)
+
+### Pose
+- `position`: Position object (x, y, z coordinates)
+- `orientation`: Orientation object (quaternion x, y, z, w)
+
+### Position
+- `x`: float
+- `y`: float
+- `z`: float
+
+### Orientation
+- `x`: float
+- `y`: float
+- `z`: float
+- `w`: float
+
+### Plan
+- `planId`: string (unique identifier)
+- `waypoints`: array of Waypoint objects (navigation waypoints)
+
+### Waypoint
+- Same structure as Pose
+
+### Navigation Status
+- `navigationStatus`: enum (idle, active, paused, recovering)
+- `currentGoalId`: string (ID of current goal if any)
+- `currentPose`: Pose object (current robot pose)
+- `remainingDistance`: float (remaining distance to goal)
+- `pathProgress`: float (progress along path 0.0 to 1.0)
+- `planners`: Planners object (active planners)
+- `lastUpdate`: ISO 8601 timestamp
+
+### Planners
+- `global`: string (name of active global planner)
+- `local`: string (name of active local planner)

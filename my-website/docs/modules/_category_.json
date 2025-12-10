@@ -1,0 +1,8 @@
+{
+  "label": "Modules",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Explore the ROS 2 educational modules covering foundations, Python integration, and URDF modeling."
+  }
+}

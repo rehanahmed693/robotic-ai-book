@@ -1,0 +1,263 @@
+# Isaac ROS Perception Service API Contract
+
+## Overview
+This API contract defines the interface for interacting with Isaac ROS perception systems, including visual SLAM, object detection, and sensor processing.
+
+## Base URL
+`http://localhost:5001/api/v1`
+
+## Authentication
+All endpoints require an API key in the `X-API-Key` header.
+
+## Endpoints
+
+### POST /vslam
+Initialize a Visual SLAM pipeline.
+
+#### Request
+```json
+{
+  "pipelineId": "vslam_12345",
+  "algorithm": "visual_slam_isaac",
+  "inputSource": "camera_left",
+  "parameters": {
+    "featureTracker": "fast",
+    "matcher": "brute_force",
+    "optimizer": "g2o",
+    "minNumFeatures": 100,
+    "maxNumFeatures": 2000
+  }
+}
+```
+
+#### Response - 201 Created
+```json
+{
+  "pipelineId": "vslam_12345",
+  "status": "initialized",
+  "mappingQuality": "unknown",
+  "createdAt": "2023-10-05T16:30:00Z"
+}
+```
+
+### GET /vslam/{pipelineId}/map
+Get the current map from the Visual SLAM pipeline.
+
+#### Response - 200 OK
+```json
+{
+  "mapId": "map_67890",
+  "name": "generated_map",
+  "origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "resolution": 0.05,
+  "width": 1000,
+  "height": 1000,
+  "data": [0, 0, 0, ..., 100],  // Array of occupancy values
+  "features": [
+    {
+      "featureId": "feat_001",
+      "position": [2.5, 3.2, 0.0],
+      "descriptor": [0.1, 0.5, 0.3, 0.9, ...],
+      "trackingStatus": "tracked"
+    }
+  ],
+  "poseGraph": {
+    "nodes": [
+      {
+        "poseId": "pose_001",
+        "timestamp": "2023-10-05T16:35:00Z",
+        "position": [0.0, 0.0, 0.0],
+        "orientation": [0.0, 0.0, 0.0, 1.0]
+      }
+    ],
+    "edges": [
+      {
+        "fromPoseId": "pose_001",
+        "toPoseId": "pose_002",
+        "relativeTransform": {
+          "position": [0.5, 0.2, 0.0],
+          "orientation": [0.0, 0.0, 0.1, 0.99]
+        }
+      }
+    ]
+  },
+  "updatedAt": "2023-10-05T16:40:00Z"
+}
+```
+
+### GET /vslam/{pipelineId}/status
+Get the current status of the Visual SLAM pipeline.
+
+#### Response - 200 OK
+```json
+{
+  "pipelineId": "vslam_12345",
+  "status": "running",
+  "trackingQuality": "good",
+  "numFeatures": 1245,
+  "processingRate": 30.0,
+  "mappingQuality": "excellent",
+  "lastUpdate": "2023-10-05T16:40:00Z"
+}
+```
+
+### POST /object-detection
+Initialize an object detection pipeline.
+
+#### Request
+```json
+{
+  "pipelineId": "objdet_12345",
+  "model": "yolo_v8_isaac",
+  "inputSource": "camera_front",
+  "confidenceThreshold": 0.7
+}
+```
+
+#### Response - 201 Created
+```json
+{
+  "pipelineId": "objdet_12345",
+  "status": "initialized",
+  "model": "yolo_v8_isaac",
+  "confidenceThreshold": 0.7,
+  "createdAt": "2023-10-05T16:45:00Z"
+}
+```
+
+### GET /object-detection/{pipelineId}/detections
+Get the latest object detections from the pipeline.
+
+#### Response - 200 OK
+```json
+{
+  "pipelineId": "objdet_12345",
+  "timestamp": "2023-10-05T16:46:00Z",
+  "detections": [
+    {
+      "detectionId": "det_001",
+      "className": "person",
+      "confidence": 0.92,
+      "bbox": {
+        "xMin": 100,
+        "yMin": 150,
+        "xMax": 200,
+        "yMax": 300
+      },
+      "position3D": {
+        "x": 2.5,
+        "y": 1.2,
+        "z": 0.0
+      }
+    },
+    {
+      "detectionId": "det_002",
+      "className": "chair",
+      "confidence": 0.87,
+      "bbox": {
+        "xMin": 300,
+        "yMin": 200,
+        "xMax": 450,
+        "yMax": 350
+      },
+      "position3D": {
+        "x": 4.2,
+        "y": 0.8,
+        "z": 0.0
+      }
+    }
+  ],
+  "updatedAt": "2023-10-05T16:46:00Z"
+}
+```
+
+## Error Responses
+
+### 400 Bad Request
+```json
+{
+  "error": "InvalidRequest",
+  "message": "Required field 'algorithm' is missing",
+  "details": {
+    "field": "algorithm"
+  }
+}
+```
+
+### 404 Not Found
+```json
+{
+  "error": "PipelineNotFound",
+  "message": "VSLAM pipeline with ID 'vslam_12345' does not exist"
+}
+```
+
+### 500 Internal Server Error
+```json
+{
+  "error": "InternalServerError",
+  "message": "An unexpected error occurred in perception pipeline"
+}
+```
+
+## Data Models
+
+### VSLAM Pipeline
+- `pipelineId`: string (unique identifier)
+- `status`: enum (initialized, running, paused, stopped)
+- `algorithm`: string (name of the VSLAM algorithm)
+- `inputSource`: string (source of visual input)
+- `parameters`: VSLAMParameters object
+- `trackingQuality`: enum (unknown, poor, good, excellent)
+- `mappingQuality`: enum (unknown, poor, good, excellent)
+- `numFeatures`: integer (number of tracked features)
+- `processingRate`: float (frames per second)
+- `createdAt`: ISO 8601 timestamp
+- `updatedAt`: ISO 8601 timestamp
+
+### VSLAMParameters
+- `featureTracker`: string (type of feature tracker to use)
+- `matcher`: string (type of feature matcher)
+- `optimizer`: string (type of graph optimizer)
+- `minNumFeatures`: integer (minimum number of features to track)
+- `maxNumFeatures`: integer (maximum number of features to track)
+
+### Map
+- `mapId`: string (unique identifier for the map)
+- `name`: string (name of the map)
+- `origin`: Position object (origin point of the map)
+- `resolution`: float (resolution in meters per pixel)
+- `width`: integer (width of the map in pixels)
+- `height`: integer (height of the map in pixels)
+- `data`: array of integers (occupancy values)
+- `features`: array of Feature objects (visual features)
+- `poseGraph`: PoseGraph object (pose relationships)
+- `updatedAt`: ISO 8601 timestamp
+
+### Feature
+- `featureId`: string (unique identifier)
+- `position`: Position object (3D position)
+- `descriptor`: array of floats (feature descriptor vector)
+- `trackingStatus`: enum (tracked, lost, new, etc.)
+
+### Detection
+- `detectionId`: string (unique identifier)
+- `className`: string (class of detected object)
+- `confidence`: float (detection confidence)
+- `bbox`: BoundingBox object (2D bounding box)
+- `position3D`: Position object (3D position if available)
+
+### BoundingBox
+- `xMin`: integer (minimum X coordinate)
+- `yMin`: integer (minimum Y coordinate)
+- `xMax`: integer (maximum X coordinate)
+- `yMax`: integer (maximum Y coordinate)
+
+### Position
+- `x`: float
+- `y`: float
+- `z`: float

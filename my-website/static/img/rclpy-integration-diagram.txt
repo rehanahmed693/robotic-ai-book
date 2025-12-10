@@ -1,0 +1,32 @@
+# rclpy Integration Diagram
+
+This text file describes how AI systems integrate with robot controllers via ROS 2 and rclpy.
+
+## Architecture:
+
+[AI Decision System] 
+        |
+        v
+[ROS 2 rclpy Node]
+        |
+        v
+[ROS 2 Communication Layer]
+        |
+        v
+[Robot Controller Nodes]
+        |
+        v
+[Physical Robot]
+
+## Key Components:
+
+1. AI Decision System: Makes decisions based on data
+2. rclpy Node: Python node implementing the AI logic
+3. ROS 2 Communication: Topics, services for message passing
+4. Robot Controllers: Handle low-level robot commands
+
+## Communication Flow:
+
+AI System -> rclpy Node -> ROS Topics -> Robot Controllers -> Robot Actions
+      ^                                                        |
+      |------------------- Sensor Feedback --------------------|

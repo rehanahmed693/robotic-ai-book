@@ -1,0 +1,46 @@
+# URDF Modeling Diagram
+
+This text file describes the structure of URDF (Unified Robot Description Format) for humanoid robots.
+
+## Basic Structure:
+
+robot (root)
+├── link: base_link
+│   ├── visual: shape, color, material
+│   ├── collision: collision geometry
+│   └── inertial: mass, center of mass, inertia tensor
+├── joint: connects links
+│   ├── parent: parent link name
+│   ├── child: child link name
+│   ├── type: joint type (revolute, continuous, prismatic, fixed, etc.)
+│   ├── origin: position and orientation of joint relative to parent
+│   ├── axis: joint axis of rotation or translation
+│   └── limit: joint limits (for revolute and prismatic joints)
+└── materials: color definitions
+
+## Humanoid Robot Structure:
+
+        head
+          |
+       neck_joint (revolute)
+          |
+        torso (base_link)
+       /           \
+shoulder_joint    shoulder_joint
+      |               |
+   upper_arm       upper_arm
+      |               |
+  elbow_joint     elbow_joint
+      |               |
+   lower_arm       lower_arm
+      |               |
+  wrist_joint     wrist_joint
+      |               |
+   (end effector)  (end effector)
+
+## Key Concepts:
+
+1. Links: Rigid bodies of the robot
+2. Joints: Connections between links
+3. Kinematic Chains: Sequences of links and joints for limbs
+4. Coordinate Systems: Each link has its own coordinate frame

@@ -1,0 +1,116 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the classic template styling here. */
+
+/* Custom styles for educational content */
+.educational-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.lesson-intro {
+  background-color: #f8f9fa;
+  border-left: 4px solid #4c78a8;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.learning-objectives {
+  background-color: #e8f4fd;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+  border-left: 3px solid #2e86de;
+}
+
+.learning-objectives h3 {
+  margin-top: 0;
+  color: #1a73e8;
+}
+
+.assessment-question {
+  background-color: #fff;
+  border: 2px solid #e0e0e0;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.assessment-question h4 {
+  margin-top: 0;
+  color: #d93025;
+}
+
+.exercise-section {
+  background-color: #f9f9f9;
+  border-left: 3px solid #34a853;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.exercise-section h3 {
+  color: #188038;
+  margin-top: 0;
+}
+
+/* Custom styles for code blocks in educational context */
+.code-block-explanation {
+  background-color: #f6f8fa;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* Progress and milestone indicators */
+.milestone {
+  display: inline-block;
+  background-color: #4caf50;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+/* Table styling for educational content */
+.table-wrapper {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.markdown table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.markdown table th,
+.markdown table td {
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  text-align: left;
+}
+
+.markdown table th {
+  background-color: #f3f4f6;
+  font-weight: 600;
+}
+
+/* Responsive design improvements */
+@media (max-width: 768px) {
+  .educational-content {
+    padding: 1rem 0.5rem;
+  }
+  
+  .lesson-intro,
+  .assessment-question,
+  .exercise-section {
+    padding: 1rem;
+  }
+}

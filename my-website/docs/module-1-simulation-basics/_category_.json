@@ -1,0 +1,9 @@
+{
+  "label": "Module 1: Simulation Basics",
+  "collapsible": true,
+  "collapsed": false,
+  "link": {
+    "type": "doc",
+    "id": "module-1-simulation-basics/intro"
+  }
+}

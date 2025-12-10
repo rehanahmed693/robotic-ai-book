@@ -1,0 +1,50 @@
+.mediaDisplay {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.mediaContainer {
+  display: inline-block;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+}
+
+.mediaElement {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  vertical-align: top;
+}
+
+.captionContainer {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  border-radius: 0 0 0.5rem 0.5rem;
+  text-align: left;
+}
+
+.caption {
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.25rem;
+}
+
+.description {
+  color: #4a5568;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .mediaDisplay {
+    margin: 1rem 0;
+  }
+  
+  .captionContainer {
+    padding: 0.25rem;
+    font-size: 0.8rem;
+  }
+}

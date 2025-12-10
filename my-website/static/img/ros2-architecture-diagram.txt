@@ -1,0 +1,27 @@
+# ROS 2 Architecture Diagram
+
+This text file describes the key components of the ROS 2 architecture.
+
+## Core Components:
+
+[Node A] --publishes--> [Topic] <--subscribes-- [Node B]
+                    |
+                    v
+             [DDS Middleware (e.g., FastDDS)]
+                    |
+                    v
+[Service Client] <--request/response--> [Service Server]
+
+## Communication Patterns:
+
+1. Publisher/Subscriber (Topics)
+   - Asynchronous, one-to-many or many-to-many communication
+   - Data flows from publishers to subscribers on named topics
+
+2. Client/Server (Services)
+   - Synchronous, one-to-one communication
+   - Request/response pattern for specific operations
+
+3. Action Client/Server (Actions)
+   - For long-running operations
+   - Supports goals, feedback, and results

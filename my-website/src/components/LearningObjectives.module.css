@@ -1,0 +1,39 @@
+.learningObjectives {
+  padding: 1.5rem;
+  border-left: 0.5rem solid #4c78a8;
+  background-color: #f0f8ff;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.learningObjectives--card {
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.title {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #2c66c4;
+}
+
+.objectivesList {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.objectiveItem {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 576px) {
+  .learningObjectives {
+    padding: 1rem;
+  }
+  
+  .title {
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,195 @@
+# Isaac Sim Simulation Service API Contract
+
+## Overview
+This API contract defines the interface for interacting with Isaac Sim simulation environments, including creating, configuring, and controlling simulation scenarios.
+
+## Base URL
+`http://localhost:5000/api/v1`
+
+## Authentication
+All endpoints require an API key in the `X-API-Key` header.
+
+## Endpoints
+
+### POST /simulations
+Create a new simulation environment.
+
+#### Request
+```json
+{
+  "name": "test_environment",
+  "description": "A test simulation environment",
+  "physicsProperties": {
+    "gravity": [0, 0, -9.81],
+    "friction": 0.5
+  },
+  "robotModel": {
+    "urdfPath": "/path/to/robot.urdf",
+    "initialPose": {
+      "position": [0, 0, 0],
+      "orientation": [0, 0, 0, 1]
+    }
+  },
+  "sensors": [
+    {
+      "type": "camera",
+      "mountPoint": [0.1, 0, 0.1],
+      "parameters": {
+        "resolution": [640, 480],
+        "fov": 90
+      }
+    }
+  ]
+}
+```
+
+#### Response - 201 Created
+```json
+{
+  "simulationId": "sim_12345",
+  "name": "test_environment",
+  "status": "created",
+  "createdAt": "2023-10-05T14:48:00Z"
+}
+```
+
+### GET /simulations/{simulationId}
+Get details of a specific simulation.
+
+#### Response - 200 OK
+```json
+{
+  "simulationId": "sim_12345",
+  "name": "test_environment",
+  "description": "A test simulation environment",
+  "status": "running",
+  "physicsProperties": {
+    "gravity": [0, 0, -9.81],
+    "friction": 0.5
+  },
+  "robotModel": {
+    "urdfPath": "/path/to/robot.urdf",
+    "currentPose": {
+      "position": [1.2, 0.5, 0],
+      "orientation": [0, 0, 0.1, 0.99]
+    }
+  },
+  "sensors": [
+    {
+      "type": "camera",
+      "mountPoint": [0.1, 0, 0.1],
+      "parameters": {
+        "resolution": [640, 480],
+        "fov": 90
+      },
+      "output": "sensor_data/camera_frame"
+    }
+  ],
+  "createdAt": "2023-10-05T14:48:00Z",
+  "updatedAt": "2023-10-05T15:20:00Z"
+}
+```
+
+### PUT /simulations/{simulationId}/control
+Control the simulation (start, stop, pause, reset).
+
+#### Request
+```json
+{
+  "command": "start"
+}
+```
+
+Possible commands: "start", "stop", "pause", "reset", "step"
+
+#### Response - 200 OK
+```json
+{
+  "simulationId": "sim_12345",
+  "status": "running",
+  "message": "Simulation started successfully"
+}
+```
+
+### POST /simulations/{simulationId}/move-robot
+Send movement commands to the robot in simulation.
+
+#### Request
+```json
+{
+  "targetPose": {
+    "position": [5.0, 3.0, 0.0],
+    "orientation": [0, 0, 0, 1]
+  },
+  "velocity": 1.0
+}
+```
+
+#### Response - 200 OK
+```json
+{
+  "simulationId": "sim_12345",
+  "robotStatus": "moving",
+  "estimatedArrival": "2023-10-05T15:25:30Z"
+}
+```
+
+## Error Responses
+
+### 400 Bad Request
+```json
+{
+  "error": "InvalidRequest",
+  "message": "Required field 'name' is missing",
+  "details": {
+    "field": "name"
+  }
+}
+```
+
+### 404 Not Found
+```json
+{
+  "error": "SimulationNotFound",
+  "message": "Simulation with ID 'sim_12345' does not exist"
+}
+```
+
+### 500 Internal Server Error
+```json
+{
+  "error": "InternalServerError",
+  "message": "An unexpected error occurred"
+}
+```
+
+## Data Models
+
+### Simulation
+- `simulationId`: string (unique identifier)
+- `name`: string (name of the simulation)
+- `description`: string (optional description)
+- `status`: enum (created, running, paused, stopped)
+- `physicsProperties`: PhysicsProperties object
+- `robotModel`: RobotModel object
+- `sensors`: array of Sensor objects
+- `createdAt`: ISO 8601 timestamp
+- `updatedAt`: ISO 8601 timestamp
+
+### PhysicsProperties
+- `gravity`: array of 3 floats [x, y, z]
+- `friction`: float
+
+### RobotModel
+- `urdfPath`: string (path to URDF file)
+- `currentPose`: Pose object (for running simulations)
+- `initialPose`: Pose object (for new simulations)
+
+### Pose
+- `position`: array of 3 floats [x, y, z]
+- `orientation`: array of 4 floats [x, y, z, w] (quaternion)
+
+### Sensor
+- `type`: string (camera, lidar, imu, etc.)
+- `mountPoint`: array of 3 floats [x, y, z]
+- `parameters`: object (specific to sensor type)

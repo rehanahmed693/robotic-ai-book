@@ -1,0 +1,44 @@
+.durationEstimator {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  background-color: #f8f9fa;
+  border-radius: 0.5rem;
+  border: 1px solid #e9ecef;
+  max-width: fit-content;
+}
+
+.durationContent {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.icon {
+  font-size: 1.25rem;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6c757d;
+  text-transform: uppercase;
+}
+
+.duration {
+  font-weight: bold;
+  color: #495057;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 576px) {
+  .durationEstimator {
+    width: 100%;
+    justify-content: center;
+  }
+}

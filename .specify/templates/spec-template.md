@@ -1,69 +1,69 @@
-# Feature Specification: [FEATURE NAME]
+# Research Paper Specification: [PAPER TITLE]
 
-**Feature Branch**: `[###-feature-name]`  
-**Created**: [DATE]  
-**Status**: Draft  
+**Paper Branch**: `[###-paper-title]`
+**Created**: [DATE]
+**Status**: Draft
 **Input**: User description: "$ARGUMENTS"
 
-## User Scenarios & Testing *(mandatory)*
+## Research Scenarios & Validation *(mandatory)*
 
 <!--
-  IMPORTANT: User stories should be PRIORITIZED as user journeys ordered by importance.
-  Each user story/journey must be INDEPENDENTLY TESTABLE - meaning if you implement just ONE of them,
-  you should still have a viable MVP (Minimum Viable Product) that delivers value.
-  
-  Assign priorities (P1, P2, P3, etc.) to each story, where P1 is the most critical.
-  Think of each story as a standalone slice of functionality that can be:
-  - Developed independently
-  - Tested independently
-  - Deployed independently
-  - Demonstrated to users independently
+  IMPORTANT: Research topics should be PRIORITIZED as academic inquiry areas ordered by importance.
+  Each research topic must be INDEPENDENTLY VALIDATABLE - meaning if you complete just ONE of them,
+  you should still have a viable research contribution that delivers value.
+
+  Assign priorities (P1, P2, P3, etc.) to each topic, where P1 is the most critical.
+  Think of each topic as a standalone research area that can be:
+  - Researched independently
+  - Validated independently
+  - Verified independently
+  - Demonstrated to academic peers independently
 -->
 
-### User Story 1 - [Brief Title] (Priority: P1)
+### Research Topic 1 - [Brief Title] (Priority: P1)
 
-[Describe this user journey in plain language]
+[Describe this research area in academic terms]
 
-**Why this priority**: [Explain the value and why it has this priority level]
+**Why this priority**: [Explain the significance and why it has this priority level]
 
-**Independent Test**: [Describe how this can be tested independently - e.g., "Can be fully tested by [specific action] and delivers [specific value]"]
+**Independent Validation**: [Describe how this can be validated independently - e.g., "Can be fully validated by [specific methodology] and provides [specific contribution]"]
 
-**Acceptance Scenarios**:
+**Validation Scenarios**:
 
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
-2. **Given** [initial state], **When** [action], **Then** [expected outcome]
-
----
-
-### User Story 2 - [Brief Title] (Priority: P2)
-
-[Describe this user journey in plain language]
-
-**Why this priority**: [Explain the value and why it has this priority level]
-
-**Independent Test**: [Describe how this can be tested independently]
-
-**Acceptance Scenarios**:
-
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
+1. **Given** [research context], **When** [methodology applied], **Then** [expected outcome]
+2. **Given** [research context], **When** [methodology applied], **Then** [expected outcome]
 
 ---
 
-### User Story 3 - [Brief Title] (Priority: P3)
+### Research Topic 2 - [Brief Title] (Priority: P2)
 
-[Describe this user journey in plain language]
+[Describe this research area in academic terms]
 
-**Why this priority**: [Explain the value and why it has this priority level]
+**Why this priority**: [Explain the significance and why it has this priority level]
 
-**Independent Test**: [Describe how this can be tested independently]
+**Independent Validation**: [Describe how this can be validated independently]
 
-**Acceptance Scenarios**:
+**Validation Scenarios**:
 
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
+1. **Given** [research context], **When** [methodology applied], **Then** [expected outcome]
 
 ---
 
-[Add more user stories as needed, each with an assigned priority]
+### Research Topic 3 - [Brief Title] (Priority: P3)
+
+[Describe this research area in academic terms]
+
+**Why this priority**: [Explain the significance and why it has this priority level]
+
+**Independent Validation**: [Describe how this can be validated independently]
+
+**Validation Scenarios**:
+
+1. **Given** [research context], **When** [methodology applied], **Then** [expected outcome]
+
+---
+
+[Add more research topics as needed, each with an assigned priority]
 
 ### Edge Cases
 
@@ -72,44 +72,44 @@
   Fill them out with the right edge cases.
 -->
 
-- What happens when [boundary condition]?
-- How does system handle [error scenario]?
+- How does the research handle [boundary condition]?
+- What about [special scenario]?
 
 ## Requirements *(mandatory)*
 
 <!--
   ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right functional requirements.
+  Fill them out with the right research requirements.
 -->
 
-### Functional Requirements
+### Research Requirements
 
-- **FR-001**: System MUST [specific capability, e.g., "allow users to create accounts"]
-- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]  
-- **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
-- **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
-- **FR-005**: System MUST [behavior, e.g., "log all security events"]
+- **RR-001**: Research paper MUST provide source-traceable technical claims according to constitution principles
+- **RR-002**: Research paper MUST maintain academic clarity for CS/Robotics readers
+- **RR-003**: Research paper MUST enable reproducibility of all technical claims and workflows
+- **RR-004**: Research paper MUST use peer-reviewed sources for at least 50% of citations
+- **RR-005**: Research paper MUST follow APA citation format consistently
 
 *Example of marking unclear requirements:*
 
-- **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
-- **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
+- **RR-006**: Research MUST be based on [NEEDS CLARIFICATION: specific methodology not specified]
+- **RR-007**: Research MUST validate technical claims using [NEEDS CLARIFICATION: validation method not specified]
 
-### Key Entities *(include if feature involves data)*
+### Key Concepts *(include if research involves core ideas)*
 
-- **[Entity 1]**: [What it represents, key attributes without implementation]
-- **[Entity 2]**: [What it represents, relationships to other entities]
+- **[Concept 1]**: [What it represents, key attributes without implementation]
+- **[Concept 2]**: [What it represents, relationships to other concepts]
 
 ## Success Criteria *(mandatory)*
 
 <!--
-  ACTION REQUIRED: Define measurable success criteria.
+  ACTION REQUIRED: Define measurable academic success criteria.
   These must be technology-agnostic and measurable.
 -->
 
 ### Measurable Outcomes
 
-- **SC-001**: [Measurable metric, e.g., "Users can complete account creation in under 2 minutes"]
-- **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
-- **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
-- **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
+- **SC-001**: [Academic metric, e.g., "All technical claims are verifiable through source-traceable methodology"]
+- **SC-002**: [Quality metric, e.g., "Paper maintains Flesch-Kincaid grade level between 11-13"]
+- **SC-003**: [Citation metric, e.g., "At least 50% of sources are peer-reviewed articles or conference papers"]
+- **SC-004**: [Plagiarism metric, e.g., "Paper passes plagiarism check with 0% unattributed content"]

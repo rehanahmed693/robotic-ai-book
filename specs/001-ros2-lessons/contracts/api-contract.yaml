@@ -1,0 +1,222 @@
+# API Contract: ROS 2 Lessons
+
+## Overview
+This API contract defines the endpoints for the ROS 2 Lessons educational module, enabling tracking of student progress, assignment of lessons, and assessment of learning outcomes.
+
+## Base URL
+`https://api.ros2lessons.example.com/v1`
+
+## Authentication
+All endpoints require authentication using Bearer tokens:
+```
+Authorization: Bearer {jwt_token}
+```
+
+## Endpoints
+
+### Lesson Management
+
+#### GET /modules/{module_id}/lessons
+Retrieve all lessons within a specific module.
+
+**Path Parameters:**
+- `module_id`: ID of the module (e.g., "ros2-foundations", "python-integration", "urdf-modeling")
+
+**Response (200 OK):**
+```json
+{
+  "module_id": "string",
+  "module_title": "string",
+  "lessons": [
+    {
+      "lesson_id": "string",
+      "title": "string",
+      "description": "string",
+      "duration_minutes": "integer",
+      "prerequisites": ["string"],
+      "learning_objectives": ["string"],
+      "success_criteria": ["string"],
+      "order": "integer"
+    }
+  ]
+}
+```
+
+#### GET /lessons/{lesson_id}
+Retrieve the content and details of a specific lesson.
+
+**Path Parameters:**
+- `lesson_id`: Unique identifier of the lesson
+
+**Response (200 OK):**
+```json
+{
+  "lesson_id": "string",
+  "title": "string",
+  "module_id": "string",
+  "content": "markdown string",
+  "code_examples": [
+    {
+      "example_id": "string",
+      "title": "string",
+      "description": "string",
+      "source_code": "string",
+      "explanation": "string",
+      "language": "string",
+      "dependencies": ["string"]
+    }
+  ],
+  "citations": [
+    {
+      "citation_id": "string",
+      "apa_format": "string",
+      "source_type": "string",
+      "url": "string",
+      "access_date": "date string"
+    }
+  ],
+  "media_assets": [
+    {
+      "asset_id": "string",
+      "title": "string",
+      "type": "string",
+      "description": "string",
+      "file_path": "string",
+      "alt_text": "string"
+    }
+  ],
+  "learning_objectives": ["string"],
+  "success_criteria": ["string"]
+}
+```
+
+### Progress Tracking
+
+#### POST /students/{student_id}/progress
+Record progress for a student on a specific lesson.
+
+**Path Parameters:**
+- `student_id`: Unique identifier of the student
+
+**Request Body:**
+```json
+{
+  "lesson_id": "string",
+  "status": "not_started|in_progress|completed",
+  "completion_percentage": "integer",
+  "time_spent_seconds": "integer",
+  "notes": "string (optional)"
+}
+```
+
+**Response (201 Created):**
+```json
+{
+  "progress_id": "string",
+  "student_id": "string",
+  "lesson_id": "string",
+  "status": "string",
+  "completion_percentage": "integer",
+  "time_spent_seconds": "integer",
+  "created_at": "timestamp",
+  "updated_at": "timestamp"
+}
+```
+
+#### GET /students/{student_id}/progress
+Retrieve progress for all lessons for a specific student.
+
+**Path Parameters:**
+- `student_id`: Unique identifier of the student
+
+**Response (200 OK):**
+```json
+{
+  "student_id": "string",
+  "progress": [
+    {
+      "lesson_id": "string",
+      "module_id": "string",
+      "status": "string",
+      "completion_percentage": "integer",
+      "time_spent_seconds": "integer",
+      "last_accessed": "timestamp"
+    }
+  ]
+}
+```
+
+### Assessment
+
+#### POST /lessons/{lesson_id}/assessments
+Submit an assessment for a lesson to verify learning outcomes.
+
+**Path Parameters:**
+- `lesson_id`: Unique identifier of the lesson
+
+**Request Body:**
+```json
+{
+  "student_id": "string",
+  "answers": [
+    {
+      "question_id": "string",
+      "selected_option": "string",
+      "text_response": "string (for open-ended questions)"
+    }
+  ]
+}
+```
+
+**Response (200 OK):**
+```json
+{
+  "assessment_id": "string",
+  "lesson_id": "string",
+  "student_id": "string",
+  "score": "float (0.0 to 1.0)",
+  "passed": "boolean",
+  "feedback": "string",
+  "completed_at": "timestamp"
+}
+```
+
+## Error Responses
+
+All endpoints may return the following error responses:
+
+**400 Bad Request:**
+```json
+{
+  "error": "string",
+  "message": "string",
+  "code": "string"
+}
+```
+
+**401 Unauthorized:**
+```json
+{
+  "error": "unauthorized",
+  "message": "Authentication required",
+  "code": "AUTH_001"
+}
+```
+
+**404 Not Found:**
+```json
+{
+  "error": "not_found",
+  "message": "Requested resource does not exist",
+  "code": "NOT_FOUND_001"
+}
+```
+
+**500 Internal Server Error:**
+```json
+{
+  "error": "internal_error",
+  "message": "An unexpected error occurred",
+  "code": "INTERNAL_001"
+}
+```
