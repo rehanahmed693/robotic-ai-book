@@ -107,10 +107,29 @@
   .educational-content {
     padding: 1rem 0.5rem;
   }
-  
+
   .lesson-intro,
   .assessment-question,
   .exercise-section {
     padding: 1rem;
+  }
+}
+
+/* Chatbot responsive */
+@media (max-width: 768px) {
+  .chatContainer {
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .chatWindow {
+    width: 320px;
+    height: 400px;
+  }
+
+  .floatingButton {
+    width: 50px;
+    height: 50px;
+    font-size: 14px;
   }
 }
